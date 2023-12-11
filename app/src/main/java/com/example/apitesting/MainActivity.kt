@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apitesting.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        binding.rec.layoutManager = LinearLayoutManager(this)
         postViewModel.getPost()
 
         lifecycleScope.launchWhenCreated {
@@ -30,8 +33,12 @@ class MainActivity : AppCompatActivity() {
                         Log.d("tarun", "onCreate: loading")
                     }
 
-                    is ApiState.Success<*> -> {
-                        Log.d("tarun", "onCreate 12: ${it.data}")
+                    is ApiState.Success -> {
+                        Log.d("tarun", "onCreate 12: ${it.posts}")
+                        val posts = it.posts
+                        val adapter = PostAdapter(this@MainActivity,posts)
+                        binding.rec.adapter = adapter
+
                     }
 
                     is ApiState.Error -> {
