@@ -26,7 +26,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.getData()
         viewModel.data.observe(this, object : Observer<Images> {
             override fun onChanged(value: Images) {
-                val adapter = DataAdapter(this@MainActivity, viewModel.data.value?.images)
+
+                val data = value.images.sortedBy {
+                    it.order.toInt()
+                }
+
+                val adapter = DataAdapter(this@MainActivity,data)
                 binding.rec.adapter = adapter
             }
 
