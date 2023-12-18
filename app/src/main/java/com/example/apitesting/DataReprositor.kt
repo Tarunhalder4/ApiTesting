@@ -11,13 +11,9 @@ class DataReprositor @Inject constructor(private val apiService: ApiService) {
 //        get() = _data
 
     suspend fun getData():Images{
-      //  GlobalScope.launch {
-            Log.d("tarun", "getData: ${apiService.getData().images}")
-             return apiService.getData()
-      //  }
-
+        Log.d("tarun", "getData: ${apiService.getData().images}")
+         return apiService.getData()
     }
-
 
 
 
